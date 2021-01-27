@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<div class="container">
+    <nav class="navbar navbar-light bg-light">
+        <a  class="navbar-brand">Welcome to BookMyShow</a>
+        <form action="" [formGroup]="form" (ngSubmit)="submitForm()" class="form-inline">
+            <input type="text" class="form-control mr-sm-2" placeholder="search movies here" formControlName="search">
+            <span *ngIf="error">{{errorText}}</span>
+            <button type="submit" class="btn btn-outline-success my-2 my-sm-0"> Search </button>
+        </form>
+    </nav>
+    <h2 *ngIf="data">List of movies</h2>
+    <div class="row mt-3" *ngIf="data">
+        <div class="col-lg-4" *ngFor="let movie of data;" (click)="getHalls(movie.id)">
+            <p class="card text-center">{{movie.name}}</p>
+        </div>
+    </div>
+    <h2 *ngIf="cinemaHalls">List of cinema halls</h2>
+    <div class="row mt-3" *ngIf="cinemaHalls">
+        <div class="col-lg-4" *ngFor="let hall of cinemaHalls.response;" (click)="getScreens(hall.id, cinemaHalls.movie_id)">
+            <p class="card text-center">{{hall.name}}</p>
+        </div>
+    </div>
+    <h2 *ngIf="cinemaHallScreens">List of screens available for this movie</h2>
+    <div class="row mt-3" *ngIf="cinemaHallScreens">
+        <div class="col-lg-4" *ngFor="let hall of cinemaHallScreens;">
+            <div class="text-center">
+                <h2>{{hall.screens.id}}</h2>
+                <div *ngFor="let time of hall.timmings">
+                    <span>{{time.from_time}}</span>
+                    <span>{{time.to_time}}</span>
+                    <a class="btn btn-primary" (click)="bookingDetails(time.id, hall.id, hall.screens.id)" routerLink='/booking'>Book Now </a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<form action=""></form>
